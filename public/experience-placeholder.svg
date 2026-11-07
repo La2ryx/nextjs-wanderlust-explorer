@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Illustrated landscape placeholder">
+  <rect width="800" height="600" fill="#d9eae5"/>
+  <circle cx="620" cy="135" r="65" fill="#f3c987"/>
+  <path d="M0 400 180 230 340 390 480 260 800 480 800 600 0 600Z" fill="#7fa99b"/>
+  <path d="M0 470 150 365 330 500 510 350 800 500 800 600 0 600Z" fill="#426d62"/>
+  <path d="M0 530 Q200 475 400 530 T800 530 V600 H0Z" fill="#274d47"/>
+</svg>
