@@ -20,4 +20,7 @@ export type Experience = {
   rating: number;
   imageUrl: string;
   imageAlt: string;
+  duration: string;
+  groupSize: number;
+  highlights: [string, string, string];
 };

@@ -11,22 +11,25 @@ export function FavoriteButton({ id, title, isFavorite, onToggle }: {
   return (
     <button className={`heart ${isFavorite ? "heart-active" : ""}`} type="button"
       aria-label={`${isFavorite ? "Remove" : "Add"} ${title} ${isFavorite ? "from" : "to"} favorites`}
+      title={isFavorite ? "Remove from favorites" : "Save to favorites"}
       aria-pressed={isFavorite} onClick={() => onToggle(id)}>
       {isFavorite ? "♥" : "♡"}
     </button>
   );
 }
 
-export function ExperienceCard({ experience, isFavorite, onToggle }: {
+export function ExperienceCard({ experience, isFavorite, onToggle, returnTo }: {
   experience: Experience;
   isFavorite: boolean;
   onToggle: (id: string) => void;
+  returnTo?: string;
 }) {
+  const detailHref = `/experiences/${experience.id}${returnTo ? `?returnTo=${encodeURIComponent(returnTo)}` : ""}`;
   return (
     <article className="card">
       <div className="card-image">
-        <Link href={`/experiences/${experience.id}`} tabIndex={-1} aria-hidden="true">
-          <Image src={experience.imageUrl} alt="" width={800} height={600} />
+        <Link href={detailHref} className="card-image-link" aria-label={`View ${experience.title} in ${experience.destination}`}>
+          <Image src={experience.imageUrl} alt={experience.imageAlt} width={800} height={600} />
         </Link>
         <FavoriteButton id={experience.id} title={experience.title} isFavorite={isFavorite} onToggle={onToggle} />
         <span className="category-badge">{experience.category}</span>
@@ -34,19 +37,20 @@ export function ExperienceCard({ experience, isFavorite, onToggle }: {
       </div>
       <div className="card-body">
         <p className="location">{experience.destination}</p>
-        <h3><Link href={`/experiences/${experience.id}`}>{experience.title}</Link></h3>
+        <h3><Link href={detailHref}>{experience.title}</Link></h3>
         <div className="card-bottom"><span>★ {experience.rating.toFixed(1)}</span><span>From <strong>${experience.price}</strong> / person</span></div>
       </div>
     </article>
   );
 }
 
-export function ExperienceGrid({ items, favorites, onToggle }: {
+export function ExperienceGrid({ items, favorites, onToggle, returnTo }: {
   items: Experience[];
   favorites: string[];
   onToggle: (id: string) => void;
+  returnTo?: string;
 }) {
   return <div className="grid">{items.map((item) => (
-    <ExperienceCard key={item.id} experience={item} isFavorite={favorites.includes(item.id)} onToggle={onToggle} />
+    <ExperienceCard key={item.id} experience={item} isFavorite={favorites.includes(item.id)} onToggle={onToggle} returnTo={returnTo} />
   ))}</div>;
 }

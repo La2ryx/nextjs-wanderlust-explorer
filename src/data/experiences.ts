@@ -30,26 +30,42 @@ const destinations: Destination[] = [
   { city: "Edinburgh", country: "United Kingdom", titles: ["Edinburgh Hillside Hike", "Edinburgh Old Town Stories", "Scottish Food Tasting", "Edinburgh Garden Meditation", "Arthur's Seat Nature Walk"] },
 ];
 
-const descriptions: Record<(typeof categories)[number], string> = {
-  Adventure: "Get moving on an active outing with a local guide and discover a different side of the destination.",
-  Culture: "Explore local stories, heritage, and traditions with a guide who knows the area.",
-  Food: "Discover local flavors and food traditions on a relaxed culinary experience.",
-  Wellness: "Slow down and make time to recharge in a peaceful local setting.",
-  Nature: "Spend time outdoors and discover the landscapes and wildlife of the area.",
+const experienceDetails: Record<(typeof categories)[number], { description: string; duration: string; groupSize: number; highlights: [string, string, string] }> = {
+  Adventure: { description: "Trade the usual sightseeing route for an active, small-group outing. Your local host shares practical tips and favorite viewpoints along the way.", duration: "3 hours", groupSize: 8, highlights: ["Local expert guide", "Small-group pace", "All essential equipment"] },
+  Culture: { description: "Get beyond the guidebook with neighborhood stories, thoughtful context, and time to notice the details most visitors pass by.", duration: "2.5 hours", groupSize: 10, highlights: ["Stories from a local host", "Historic neighborhood stops", "Time for questions and photos"] },
+  Food: { description: "Meet the flavors of the neighborhood through a hosted tasting, local ingredients, and the traditions behind each delicious stop.", duration: "3 hours", groupSize: 8, highlights: ["Multiple local tastings", "Meet neighborhood makers", "Dietary needs welcomed"] },
+  Wellness: { description: "Leave room in your itinerary to reset with a welcoming local practitioner in a restorative setting away from the crowds.", duration: "90 minutes", groupSize: 6, highlights: ["Experienced local instructor", "Beginner-friendly session", "Equipment provided"] },
+  Nature: { description: "Step into a quieter landscape with a knowledgeable local, following scenic paths and learning about the habitat as you go.", duration: "3.5 hours", groupSize: 8, highlights: ["Scenic local route", "Nature interpretation", "Small group experience"] },
 };
 
 export const experiences: Experience[] = destinations.flatMap((place, placeIndex) =>
-  categories.map((category, categoryIndex) => ({
-    id: `${place.city.toLowerCase().replace(/[^a-z0-9]+/g, "-")}-${category.toLowerCase()}`,
-    title: place.titles[categoryIndex],
-    description: `${descriptions[category]} This experience takes place in and around ${place.city}, ${place.country}.`,
-    category,
-    city: place.city,
-    country: place.country,
-    destination: `${place.city}, ${place.country}`,
-    price: 35 + ((placeIndex * 13 + categoryIndex * 17) % 116),
-    rating: Number((4.2 + ((placeIndex + categoryIndex) % 9) / 10).toFixed(1)),
-    imageUrl: place.city === "Split" && category === "Adventure" ? adriaticImage.url : categoryImages[category].url,
-    imageAlt: place.city === "Split" && category === "Adventure" ? adriaticImage.alt : categoryImages[category].alt,
-  })),
+  categories.map((category, categoryIndex) => {
+    const title = place.titles[categoryIndex];
+    const detail = experienceDetails[category];
+    const distinctNote = category === "Food"
+      ? `Explore the flavors of ${place.city}, from market-fresh ingredients to recipes rooted in ${place.country}'s food culture.`
+      : category === "Culture"
+        ? `Follow the layers of ${place.city}'s identity, connecting its landmarks and neighborhood stories to the wider history of ${place.country}.`
+        : category === "Adventure"
+          ? `Set out from ${place.city} for an active perspective on ${place.country}, with a route selected for its scenery and local character.`
+          : category === "Wellness"
+            ? `Find a calm corner of ${place.city} and enjoy a restorative pause inspired by local rhythms in ${place.country}.`
+            : `Discover the landscapes around ${place.city}, with time to notice the plants, wildlife, and changing scenery of ${place.country}.`;
+    return {
+      id: `${place.city.toLowerCase().replace(/[^a-z0-9]+/g, "-")}-${category.toLowerCase()}`,
+      title,
+      description: `${detail.description} ${distinctNote} Your host will meet you in ${place.city}; the exact meeting point is shared after booking.`,
+      category,
+      city: place.city,
+      country: place.country,
+      destination: `${place.city}, ${place.country}`,
+      price: 35 + ((placeIndex * 13 + categoryIndex * 17) % 116),
+      rating: Number((4.2 + ((placeIndex + categoryIndex) % 9) / 10).toFixed(1)),
+      imageUrl: place.city === "Split" && category === "Adventure" ? adriaticImage.url : categoryImages[category].url,
+      imageAlt: place.city === "Split" && category === "Adventure" ? adriaticImage.alt : categoryImages[category].alt,
+      duration: detail.duration,
+      groupSize: detail.groupSize,
+      highlights: [title, ...detail.highlights.slice(0, 2)] as [string, string, string],
+    };
+  }),
 );

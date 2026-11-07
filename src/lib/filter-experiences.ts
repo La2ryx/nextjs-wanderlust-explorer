@@ -4,17 +4,19 @@ export type ExperienceFilters = {
   search: string;
   category: string;
   destination: string;
+  rating?: string;
 };
 
 export function filterExperiences(
   experiences: Experience[],
-  { search, category, destination }: ExperienceFilters,
+  { search, category, destination, rating }: ExperienceFilters,
 ): Experience[] {
   const term = search.trim();
   const escapedTerm = term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   const titlePattern = term ? new RegExp(escapedTerm, "i") : null;
   const normalizedCategory = category.trim().toLowerCase();
   const normalizedDestination = destination.trim().toLowerCase();
+  const normalizedRating = rating?.trim() ?? "";
 
   return experiences.filter(
     (experience) =>
@@ -22,17 +24,19 @@ export function filterExperiences(
       (!normalizedCategory ||
         experience.category.toLowerCase() === normalizedCategory) &&
       (!normalizedDestination ||
-        experience.country.toLowerCase() === normalizedDestination),
+        experience.country.toLowerCase() === normalizedDestination) &&
+      (!normalizedRating || experience.rating >= Number(normalizedRating)),
   );
 }
 
 export function getInvalidFilters(
   experiences: Experience[],
-  { category, destination }: ExperienceFilters,
+  { category, destination, rating }: ExperienceFilters,
 ): string[] {
   const invalid: string[] = [];
   const normalizedCategory = category.trim().toLowerCase();
   const normalizedDestination = destination.trim().toLowerCase();
+  const normalizedRating = rating?.trim() ?? "";
 
   if (
     normalizedCategory &&
@@ -48,5 +52,6 @@ export function getInvalidFilters(
   ) {
     invalid.push("destination");
   }
+  if (normalizedRating && !["4", "4.5", "4.8"].includes(normalizedRating)) invalid.push("rating");
   return invalid;
 }

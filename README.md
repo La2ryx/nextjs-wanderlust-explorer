@@ -4,21 +4,21 @@ A Next.js travel discovery demo with 100 locally generated experiences.
 
 ## Getting started
 
-Install a Node.js release supported by the installed Next.js version, then run:
+Install Node.js 20.9 or newer, then run:
 
 ```bash
 npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000). Use `npm run lint` to check lint and `npm run build` to create a production build.
+Open [http://localhost:3000](http://localhost:3000). Run `npm run lint`, `npm test`, and `npm run build` for quality checks. The automated Node test suite validates the 100-item dataset and URL filter logic.
 
 ## Features
 
-- Browse experiences by title, category, and country at `/experiences`. Filters combine and are stored in the URL, for example `/experiences?search=sailing&category=adventure&destination=Croatia`. Search treats input as literal text using an escaped case-insensitive regular expression.
+- Browse experiences by title, category, country, minimum rating, and sort order at `/experiences`. All controls are shareable in the URL, for example `/experiences?search=sailing&category=adventure&destination=Croatia&rating=4.5&sort=price-asc`. Search treats input as literal text using an escaped case-insensitive regular expression.
 - Visit an experience's detail page, save or remove favorites, and view the saved count on the profile page.
 - Favorites are held in React state and last only until the page is refreshed. There is no account, booking service, or persistence.
-- The local dataset is in `src/data/experiences.ts`. Every experience includes a stable ID, category, city, country, destination, description, USD price per person, rating out of five, and an image URL and description. Photographs are illustrative, not photographs of the listed experiences; most are shared by category.
+- The local dataset is in `src/data/experiences.ts`. Every experience includes a stable ID, category, city, country, destination, description, duration, group size, highlights, USD price per person, rating out of five, and an image URL and description. Photographs are illustrative, not photographs of the listed experiences; most are shared by category.
 
 ## Design References
 
