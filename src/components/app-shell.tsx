@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { experiences } from "@/data/experiences";
+import { adriaticImage } from "@/data/experience-images";
 import { ExperienceGrid, FavoriteButton } from "./experience-card";
 import { Explorer } from "./explorer";
 
@@ -42,7 +43,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <p>Find experiences that bring you closer to the places, people, and stories that make travel unforgettable.</p>
           <Link className="button" href="/experiences">Explore experiences <span aria-hidden="true">→</span></Link>
           <div className="hero-notes"><span>✦ 100 curated experiences</span><span>✦ Adventures around the world</span></div>
-        </div><div className="hero-art"><Image src="/experience-placeholder.svg" alt="Illustration of mountains and a setting sun" width={800} height={600} priority /><div className="hero-art-label">A little more wonder,<br /><strong>wherever you wander.</strong></div></div></div></section>
+        </div><div className="hero-art"><Image src={adriaticImage.url} alt={adriaticImage.alt} width={1200} height={900} priority /><div className="hero-art-label">A little more wonder,<br /><strong>wherever you wander.</strong></div></div></div></section>
         <section className="container featured"><div className="section-heading"><div><p className="eyebrow">GET INSPIRED</p><h2>Find your kind of adventure</h2></div><Link className="text-link" href="/experiences">See all experiences →</Link></div>
           <ExperienceGrid items={experiences.slice(0, 3)} favorites={favorites} onToggle={toggleFavorite} />
         </section>
@@ -50,7 +51,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       {pathname === "/experiences" && <Suspense fallback={<main className="container"><p>Loading experiences...</p></main>}><Explorer favorites={favorites} onToggle={toggleFavorite} /></Suspense>}
       {detail && <main className="container detail">
         <Link className="text-link" href="/experiences">← Back to experiences</Link>
-        <div className="detail-layout"><Image className="detail-image" src={detail.imageUrl} alt="Illustrated landscape placeholder" width={800} height={600} />
+        <div className="detail-layout"><figure><Image className="detail-image" src={detail.imageUrl} alt={detail.imageAlt} width={1200} height={900} /><figcaption className="photo-caption">Illustrative photo; not a photograph of the listed experience.</figcaption></figure>
           <div><p className="eyebrow">{detail.category} · {detail.destination}</p><h1>{detail.title}</h1>
             <p className="rating">★ {detail.rating.toFixed(1)} / 5</p><p>{detail.description}</p>
             <p className="detail-price">From <strong>${detail.price}</strong> / person</p>

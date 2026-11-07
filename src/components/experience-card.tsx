@@ -30,6 +30,7 @@ export function ExperienceCard({ experience, isFavorite, onToggle }: {
         </Link>
         <FavoriteButton id={experience.id} title={experience.title} isFavorite={isFavorite} onToggle={onToggle} />
         <span className="category-badge">{experience.category}</span>
+        <span className="image-note">Illustrative photo</span>
       </div>
       <div className="card-body">
         <p className="location">{experience.destination}</p>

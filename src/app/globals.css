@@ -47,6 +47,7 @@ h2 { font-size: clamp(1.7rem, 3vw, 2.4rem); }
 .card-image .heart { position: absolute; right: 14px; top: 14px; }
 .heart-active { color: #bd4d4d; }
 .category-badge { position: absolute; left: 14px; bottom: 14px; background: white; padding: 5px 10px; border-radius: 4px; font-size: .7rem; font-weight: 800; }
+.image-note { position: absolute; right: 14px; bottom: 14px; padding: 5px 8px; border-radius: 4px; background: #173c34df; color: white; font-size: .65rem; }
 .card-body { padding: 19px; }
 .location { text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-size: .68rem; font-weight: 800; margin-bottom: 9px; }
 .card h3 { font-size: 1.18rem; min-height: 2.5em; margin-bottom: 22px; }
@@ -69,6 +70,7 @@ h2 { font-size: clamp(1.7rem, 3vw, 2.4rem); }
 .detail { padding-block: 55px 90px; }
 .detail-layout { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 55px; margin-top: 26px; }
 .detail-image { width: 100%; height: auto; border-radius: 10px; }
+.photo-caption { color: var(--muted); font-size: .75rem; margin-top: 8px; }
 .detail h1 { font-size: clamp(2.4rem, 4vw, 3.8rem); }
 .detail-price { padding-top: 20px; border-top: 1px solid #e5ebe6; }
 .detail-price strong { color: var(--ink); font-size: 1.5rem; }

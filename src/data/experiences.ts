@@ -1,4 +1,5 @@
 import { categories, type Experience } from "../types/experience";
+import { adriaticImage, categoryImages } from "./experience-images";
 
 type Destination = {
   city: string;
@@ -48,6 +49,7 @@ export const experiences: Experience[] = destinations.flatMap((place, placeIndex
     destination: `${place.city}, ${place.country}`,
     price: 35 + ((placeIndex * 13 + categoryIndex * 17) % 116),
     rating: Number((4.2 + ((placeIndex + categoryIndex) % 9) / 10).toFixed(1)),
-    imageUrl: "/experience-placeholder.svg",
+    imageUrl: place.city === "Split" && category === "Adventure" ? adriaticImage.url : categoryImages[category].url,
+    imageAlt: place.city === "Split" && category === "Adventure" ? adriaticImage.alt : categoryImages[category].alt,
   })),
 );

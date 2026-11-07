@@ -19,4 +19,5 @@ export type Experience = {
   price: number;
   rating: number;
   imageUrl: string;
+  imageAlt: string;
 };
