@@ -22,7 +22,7 @@ Open [http://localhost:3000](http://localhost:3000). Run `npm run lint`, `npm te
 
 ## Design References
 
-The owner's screenshots of [Viator](https://www.viator.com/) and [Travelocity](https://www.travelocity.com/) inspired the use of prominent travel imagery, clear experience details, and mobile-friendly controls. The interface is an original design; no images or assets were copied from those screenshots or from Airbnb.
+The design direction was informed by real travel-discovery interfaces: [Viator](https://www.viator.com/), [GetYourGuide](https://www.getyourguide.com/), and [Visit A City](https://www.visitacity.com/). Their use of destination discovery, experience cards, prominent imagery, and clear trip details informed the visual approach. The interface is an original design; no images or assets were copied from those sites or from Airbnb.
 
 ## Photography credits
 

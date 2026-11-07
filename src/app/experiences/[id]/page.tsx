@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { experiences } from "@/data/experiences";
+
+// Experience detail content is rendered by the shared client shell; route params
+// are validated separately and are not expected to block instant navigation.
+export const instant = false;
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params;
@@ -9,11 +14,15 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   return { title: `${experience.title} | Wanderlust Explorer`, description: experience.description };
 }
 
-export default async function ExperiencePage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+export default function ExperiencePage({ params }: PageProps<"/experiences/[id]">) {
+  return (
+    <Suspense fallback={null}>
+      <ValidateExperience params={params} />
+    </Suspense>
+  );
+}
+
+async function ValidateExperience({ params }: Pick<PageProps<"/experiences/[id]">, "params">) {
   const { id } = await params;
   if (!experiences.some((experience) => experience.id === id)) notFound();
   return null;
