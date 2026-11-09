@@ -13,9 +13,28 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000). Run `npm run lint`, `npm test`, and `npm run build` for quality checks. The automated Node test suite validates the 100-item dataset and URL filter logic.
 
+## Browser regression tests
+
+Install Chromium once with `npx playwright install chromium`, then run `npm run test:e2e`.
+On Linux, if browser system libraries are missing, run `npx playwright install-deps chromium`.
+The suite builds the app and starts its own production server on port 3100. It checks desktop and mobile layouts,
+all routes, URL prefill and reload, rapid typing, combined filters, sorting, browser
+back/forward, empty states, and shared favorites. Every test also checks for browser
+errors and hydration warnings; these warnings are not suppressed by the app.
+
+In Codespaces, open forwarded port **3000** to use the app, not a VS Code internal port.
+If a hydration warning appears only in your usual browser, compare with an
+extension-free private window and inspect the reported attribute diff.
+Grammarly's `data-new-gr-c-s-check-loaded` and `data-gr-ext-installed` attributes
+are extension-injected, not app-generated. Disable that extension for this site
+instead of hiding all root hydration warnings.
+The dev configuration allows local loopback and this Codespace's exact forwarded
+port-3000 hostname for hot reload, without allowing every Codespaces origin.
+
 ## Features
 
-- Browse experiences by title, category, country, minimum rating, and sort order at `/experiences`. All controls are shareable in the URL, for example `/experiences?search=sailing&category=adventure&destination=Croatia&rating=4.5&sort=price-asc`. Search treats input as literal text using an escaped case-insensitive regular expression.
+- Browse experiences by title, category, city or country, minimum rating, and sort order at `/experiences`. All controls are shareable in the URL, for example `/experiences?search=sailing&category=adventure&destination=Croatia&rating=4.5&sort=price-asc`. Destination also accepts a full value such as `Split, Croatia`. Search treats input as literal text using an escaped case-insensitive regular expression.
+- `src/hooks/useExperiences.ts` synchronizes controls with the URL using Next.js navigation and optimistic updates. Search replaces the current history entry; other filters push entries for back/forward navigation. Clearing filters preserves unrelated query parameters.
 - Visit an experience's detail page, save or remove favorites, and view the saved count on the profile page.
 - Favorites are held in React state and last only until the page is refreshed. There is no account, booking service, or persistence.
 - The local dataset is in `src/data/experiences.ts`. Every experience includes a stable ID, category, city, country, destination, description, duration, group size, highlights, USD price per person, rating out of five, and an image URL and description. Photographs are illustrative, not photographs of the listed experiences; most are shared by category.

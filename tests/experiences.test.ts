@@ -31,3 +31,11 @@ test("unknown URL filters produce actionable validation results", () => {
   assert.deepEqual(getInvalidFilters(experiences, { ...emptyFilters, category: "Space", destination: "Atlantis", rating: "NaN" }), ["category", "destination", "rating"]);
   assert.deepEqual(getInvalidFilters(experiences, { ...emptyFilters, category: "culture", destination: "croatia" }), []);
 });
+
+test("city, country and full destination URLs share matching and validation rules", () => {
+  for (const destination of [" Croatia ", "SPLIT", "split, croatia"]) {
+    const filters = { search: "sailing", category: " Adventure ", destination };
+    assert.deepEqual(filterExperiences(experiences, filters).map(({ id }) => id), ["split-adventure"]);
+    assert.deepEqual(getInvalidFilters(experiences, filters), []);
+  }
+});

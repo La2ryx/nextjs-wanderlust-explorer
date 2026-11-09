@@ -7,6 +7,12 @@ export type ExperienceFilters = {
   rating?: string;
 };
 
+function matchesDestination(experience: Experience, destination: string): boolean {
+  return [experience.city, experience.country, experience.destination].some(
+    (value) => value.toLowerCase() === destination,
+  );
+}
+
 export function filterExperiences(
   experiences: Experience[],
   { search, category, destination, rating }: ExperienceFilters,
@@ -24,7 +30,7 @@ export function filterExperiences(
       (!normalizedCategory ||
         experience.category.toLowerCase() === normalizedCategory) &&
       (!normalizedDestination ||
-        experience.country.toLowerCase() === normalizedDestination) &&
+        matchesDestination(experience, normalizedDestination)) &&
       (!normalizedRating || experience.rating >= Number(normalizedRating)),
   );
 }
@@ -47,7 +53,7 @@ export function getInvalidFilters(
   if (
     normalizedDestination &&
     !experiences.some(
-      (experience) => experience.country.toLowerCase() === normalizedDestination,
+      (experience) => matchesDestination(experience, normalizedDestination),
     )
   ) {
     invalid.push("destination");
